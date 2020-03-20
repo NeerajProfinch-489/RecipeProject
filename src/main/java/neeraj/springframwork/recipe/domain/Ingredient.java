@@ -37,4 +37,8 @@ public class Ingredient {
         this.recipe = recipe;
     }
 
+    protected boolean canEqual(final Object other) {
+        return other instanceof Ingredient;
+    }
+
 }

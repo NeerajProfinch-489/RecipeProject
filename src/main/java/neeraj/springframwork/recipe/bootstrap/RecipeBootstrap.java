@@ -1,18 +1,22 @@
 package neeraj.springframwork.recipe.bootstrap;
 
+import lombok.extern.slf4j.Slf4j;
 import neeraj.springframwork.recipe.domain.*;
 import neeraj.springframwork.recipe.repositories.CategoryRepository;
 import neeraj.springframwork.recipe.repositories.RecipeRepository;
 import neeraj.springframwork.recipe.repositories.UnitOfMeasureRepository;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -27,12 +31,13 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         recipeRepository.saveAll(getRecipes());
     }
 
     private List<Recipe> getRecipes() {
-
+        log.debug("getting recipes list ");
         List<Recipe> recipes = new ArrayList<>(2);
 
         //get UOMs
